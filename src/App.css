@@ -1,0 +1,33 @@
+html {
+  font-size: 16px;
+}
+@media only screen and (min-width: 0) and (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+.MuiTypography-root {
+  line-height: normal !important;
+}
+.select__menu-item {
+  color: black !important;
+  font-weight: 600 !important;
+}
+
+.each-slide-effect > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 350px;
+}
+
+.each-slide-effect span {
+  padding: 20px;
+  font-size: 20px;
+  background: #efefef;
+  text-align: center;
+}
+a {
+  /*text-decoration: none !important;*/
+}
