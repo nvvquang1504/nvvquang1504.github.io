@@ -1,8 +1,5 @@
 import "./App.scss";
 import {
-  createBrowserRouter,
-  RouterProvider,
-  Outlet,
   BrowserRouter,
   Routes,
   Route,

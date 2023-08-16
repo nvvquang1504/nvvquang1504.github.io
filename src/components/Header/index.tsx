@@ -13,6 +13,8 @@ import "./style.scss";
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const navigate = useNavigate();
   function handleScroll() {
     const offset = window.scrollY;
     if (offset > 200) {
@@ -24,19 +26,20 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
   }, []);
-
   return (
     <>
       <header className={`main-header ${scrolled ? "sticky-header" : ""}`}>
         <div className="header-content">
           <ul className={"left"}>
-            <li>Home</li>
+            <li onClick={() => navigate("/")}>Home</li>
             <li>About</li>
             <li>Categories</li>
           </ul>
-          <div className="center">Quang Store</div>
+          <div className="center" onClick={() => navigate("/")}>
+            Quang Store
+          </div>
           <div className="right">
-            <TbSearch />
+            <TbSearch onClick={() => setShowSearch(true)} />
             <AiOutlineHeart />
             <span className={"cart-icon"} onClick={() => setShowCart(true)}>
               <CgShoppingCart />
@@ -45,7 +48,8 @@ const Header = () => {
           </div>
         </div>
       </header>
-      {showCart && <Cart setShowCart={setShowCart}  />}
+      {showCart && <Cart setShowCart={setShowCart} />}
+      {showSearch && <Search setShowSearch={setShowSearch} />}
     </>
   );
 };

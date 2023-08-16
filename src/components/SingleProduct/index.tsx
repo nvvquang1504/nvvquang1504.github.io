@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useAppDispatch } from "../../store/hooks.ts";
 import RelatedProducts from "./RelatedProducts";
 import {
   FaFacebookF,
@@ -7,27 +9,69 @@ import {
   FaPinterest,
   FaCartPlus,
 } from "react-icons/fa";
+import { useFetchData } from "../../hooks/useFetchData.ts";
+import { useParams } from "react-router-dom";
 import "./style.scss";
-import prod1 from "../../assets/products/earbuds-prod-1.webp";
+import { REACT_APP_DEV_URL } from "../../env.ts";
+import { ADD_TO_CART } from "../../store/features/globalSlice.ts";
 const SingleProduct = () => {
+  const dispatch = useAppDispatch();
+  const [quantity, setQuantity] = useState<number>(1);
+  const { id } = useParams();
+  const { data } = useFetchData(`/api/products?populate=*&[filters][id]=${id}`);
+
+  function increment() {
+    setQuantity((prev) => prev + 1);
+  }
+  function decrement() {
+    setQuantity((prev) => {
+      if (prev === 1) {
+        return 1;
+      }
+      return prev + 1;
+    });
+  }
+
+  if (!data) return;
+  const product = data.data[0].attributes;
   return (
     <div className={"single-product-main-content"}>
       <div className="layout">
         <div className="single-product-page">
           <div className="left">
-            <img src={prod1} alt="" />
+            <img
+              src={REACT_APP_DEV_URL + product.img.data[0].attributes.url}
+              alt=""
+            />
           </div>
           <div className="right">
-            <span className="name">dasd</span>
-            <span className="price">400</span>
-            <span className="desc">dada</span>
+            <span className="name">{product.title}</span>
+            <span className="price">{product.price} &#x20AB;</span>
+            <span className="desc">{product.desc}</span>
             <div className="cart-buttons">
               <div className="quality-buttons">
-                <span>-</span>
-                <span>5</span>
-                <span>+</span>
+                <span
+                  onClick={() => {
+                    decrement();
+                  }}
+                >
+                  -
+                </span>
+                <span>{quantity}</span>
+                <span
+                  onClick={() => {
+                    increment();
+                  }}
+                >
+                  +
+                </span>
               </div>
-              <button className={"add-to-cart-button"}>
+              <button
+                className={"add-to-cart-button"}
+                onClick={() => {
+                  dispatch(ADD_TO_CART({ product: data.data[0], quantity }));
+                }}
+              >
                 <FaCartPlus size={20} />
                 ADD TO CART
               </button>
@@ -35,8 +79,8 @@ const SingleProduct = () => {
             <span className="divider"></span>
             <div className="info-item">
               <span className="text-bold">
-                Category:
-                <span>Headphones</span>
+                Category:{"  "}
+                <span>{product.categories.data[0].attributes.title}</span>
               </span>
               <span className="text-bold">
                 Share:
@@ -51,7 +95,10 @@ const SingleProduct = () => {
             </div>
           </div>
         </div>
-        <RelatedProducts />
+        <RelatedProducts
+          productId={id}
+          categoryId={product.categories.data[0].id}
+        />
       </div>
     </div>
   );

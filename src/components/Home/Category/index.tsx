@@ -1,24 +1,28 @@
-import cat1 from "../../../assets/category/cat-1.jpg";
-import cat2 from "../../../assets/category/cat-2.jpg";
-import cat3 from "../../../assets/category/cat-3.jpg";
-import cat4 from "../../../assets/category/cat-4.jpg";
+import { useNavigate } from "react-router-dom";
+import { REACT_APP_DEV_URL } from "../../../env.ts";
 import "./style.scss";
-const Category = () => {
+const Category = ({ categories }: { categories?: any }) => {
+  const navigate = useNavigate();
+
   return (
     <div className={"shop-by-category"}>
       <div className="categories">
-        <div className="category">
-          <img src={cat1} />
-        </div>
-        <div className="category">
-          <img src={cat2} />
-        </div>
-        <div className="category">
-          <img src={cat3} />
-        </div>
-        <div className="category">
-          <img src={cat4} />
-        </div>
+        {categories?.data?.map((item: any) => {
+          const { attributes } = item;
+          return (
+            <div
+              key={item.id}
+              className="category"
+              onClick={() => navigate(`/category/${item.id}`)}
+            >
+              <img
+                src={
+                  REACT_APP_DEV_URL + item.attributes.img.data.attributes.url
+                }
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
