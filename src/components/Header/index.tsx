@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store/hooks.ts";
+import { useLocation } from "react-router-dom";
 
 import { TbSearch } from "react-icons/tb";
 import { CgShoppingCart } from "react-icons/cg";
@@ -11,6 +13,8 @@ import Cart from "../Cart";
 import "./style.scss";
 
 const Header = () => {
+  const location = useLocation();
+  const cartItems = useAppSelector((state) => state.global.cartItems);
   const [scrolled, setScrolled] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -26,6 +30,9 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <>
       <header className={`main-header ${scrolled ? "sticky-header" : ""}`}>
@@ -43,7 +50,7 @@ const Header = () => {
             <AiOutlineHeart />
             <span className={"cart-icon"} onClick={() => setShowCart(true)}>
               <CgShoppingCart />
-              <span>5</span>
+              <span>{cartItems.length}</span>
             </span>
           </div>
         </div>

@@ -17,7 +17,7 @@ const Category = ({ categories }: { categories?: any }) => {
             >
               <img
                 src={
-                  REACT_APP_DEV_URL + item.attributes.img.data.attributes.url
+                  item.attributes.img.data.attributes.url
                 }
               />
             </div>

@@ -1,9 +1,7 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import "./App.scss";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+// COMPONENTS
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -12,6 +10,7 @@ import SingleProduct from "./components/SingleProduct";
 import Newsletter from "./components/Newsletter";
 
 function App() {
+
   return (
     <BrowserRouter>
       <Header />

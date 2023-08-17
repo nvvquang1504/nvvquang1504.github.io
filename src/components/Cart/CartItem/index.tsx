@@ -6,26 +6,24 @@ import {
   REMOVE_FROM_CART,
   SET_PRODUCT_QUANTITY,
 } from "../../../store/features/globalSlice.ts";
-import prod from "../../../assets/products/earbuds-prod-3.webp";
 import { REACT_APP_DEV_URL } from "../../../env.ts";
 
-const CartItem = () => {
+const CartItem = ({ cartItems }: { cartItems: any }) => {
   const dispatch = useAppDispatch();
 
-  const { cartItems } = useAppSelector((state) => state.global);
   function handleRemoveFromCart(product: any) {
     dispatch(REMOVE_FROM_CART({ product }));
   }
 
   return (
     <div className={"cart-products"}>
-      {cartItems.map((item: any, index: number) => {
+      {cartItems.map((item: any) => {
         return (
           <div key={item.id} className="cart-product">
             <div className="img-container">
               <img
                 src={
-                  REACT_APP_DEV_URL + item.attributes.img.data[0].attributes.url
+                  item.attributes.img.data[0].attributes.url
                 }
                 alt=""
               />

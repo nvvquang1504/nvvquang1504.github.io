@@ -11,7 +11,7 @@ const Product = ({ id, data }: ProductProps) => {
   return (
     <div className={"product-card"} onClick={() => navigate(`/product/${id}`)}>
       <div className="thumbnail">
-        <img src={REACT_APP_DEV_URL + data.img.data[0].attributes.url} alt="" />
+        <img src={data.img.data[0].attributes.url} alt="" />
       </div>
       <div className="prod-details">
         <span className="name">{data?.title}</span>

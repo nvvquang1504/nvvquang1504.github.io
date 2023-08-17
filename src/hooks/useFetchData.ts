@@ -11,6 +11,10 @@ export const useFetchData = (endpoint: string) => {
       .catch((err) => {
         console.log(err);
       });
+    return () => {
+      setData(undefined);
+    };
   }, [endpoint]);
+
   return { data };
 };
